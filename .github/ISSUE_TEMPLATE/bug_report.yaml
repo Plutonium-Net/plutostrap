@@ -1,56 +1,59 @@
 name: Bug Report
-description: Report a problem you're having
+description: Report a problem with PlutoStrap
+labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        > [!IMPORTANT]
-        > Bloxstrap isn't actively maintained anymore. We might not get to your report unless it may be important (like if it's about a feature breaking). Sorry about that.
-        > If your problem keeps happening, it can typically be fixed by [reinstalling](https://bloxstraplabs.com/wiki/help/uninstalling-bloxstrap/).
-        ### **Instructions**
-        - Before you open this report, please [check the Wiki first](https://bloxstraplabs.com/wiki/help). Most common problems will be addressed here.
-        - Also, don't open a report if it's in the [currently known issues](https://github.com/bloxstraplabs/bloxstrap/issues/5779). Common problems will be mentioned here too.
-        - Make sure you are using the [latest version of Bloxstrap](https://github.com/bloxstraplabs/bloxstrap/releases/latest). Your report won't be valid if you aren't.
-        - If you're finding that some feature is missing, it's probably because of a recent update. Check the [latest version's release notes](https://github.com/bloxstraplabs/bloxstrap/releases/latest).
-        - Your report will be closed if it's lazily made and has too little detail.
-  - type: checkboxes
-    id: terms
+        Thanks for taking the time to report a problem.
+
+        - Before you open this report, please make sure you are using the [latest release of PlutoStrap](https://github.com/Plutonium-Net/plutostrap/releases/latest).
+        - Search the [existing issues](https://github.com/Plutonium-Net/plutostrap/issues?q=is%3Aissue) first, as the problem may already be known.
+        - PlutoStrap is a third-party launcher. Problems with Roblox itself should be reported to Roblox.
+
+  - type: textarea
+    id: description
     attributes:
-      label: I have...
-      options:
-        - label: I have read the instructions, and I didn't find a solution in any of the links above.
-          required: true
-        - label: I am using the latest version of Bloxstrap.
-          required: true
+      label: What happened?
+      description: Describe the problem, including what you expected to happen.
+      placeholder: When I launched Roblox, PlutoStrap...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can the problem be reproduced?
+      placeholder: |
+        1. Open PlutoStrap settings
+        2. Enable ...
+        3. Launch Roblox
+    validations:
+      required: false
+
   - type: input
     id: version
     attributes:
-      label: Bloxstrap Version
-      description: "What version of Bloxstrap are you using? Find it in the 'About' section of the Settings"
-      placeholder: "v1.0.0 (for example)"
+      label: PlutoStrap version
+      description: Shown in the About window, or in Settings.
+      placeholder: e.g. 1.0.0
     validations:
       required: true
-  - type: textarea
-    id: what-happened
+
+  - type: input
+    id: windows
     attributes:
-      label: What problem did you encounter?
-      description: Provide a good description of the problem you're having. Screenshots too please.
+      label: Windows version
+      placeholder: e.g. Windows 11 23H2
     validations:
       required: true
-  - type: textarea
-    id: repro-steps
-    attributes:
-      label: How do you reproduce the problem?
-      description: Write down steps to cause the problem, from start to finish, if you can.
-      placeholder: |
-        1. Go to '...'
-        2. Click on '...'
-        3. Scroll down to '...'
-        4. See error
+
   - type: textarea
     id: log
     attributes:
-      label: Bloxstrap Log
-      description: If you're getting a 'Bloxstrap Exception' error, upload your log file here. Open it, then select all (Ctrl+A), then copy and paste here. Otherwise, leave it empty.
-      value: "N/A"
+      label: Log
+      description: Paste the contents of the PlutoStrap log here, if you have one. This is filled in automatically when reporting from the exception dialog.
       render: text
+    validations:
+      required: false

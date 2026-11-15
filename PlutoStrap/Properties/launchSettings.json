@@ -1,0 +1,35 @@
+{
+  "profiles": {
+    "PlutoStrap (Launch)": {
+      "commandName": "Project"
+    },
+    "PlutoStrap (Quiet Launch)": {
+      "commandName": "Project",
+      "commandLineArgs": "-quiet"
+    },
+    "PlutoStrap (Uninstall)": {
+      "commandName": "Project",
+      "commandLineArgs": "-uninstall"
+    },
+    "PlutoStrap (Quiet Uninstall)": {
+      "commandName": "Project",
+      "commandLineArgs": "-uninstall -quiet"
+    },
+    "PlutoStrap (Menu)": {
+      "commandName": "Project",
+      "commandLineArgs": "-menu"
+    },
+    "PlutoStrap (Deeplink)": {
+      "commandName": "Project",
+      "commandLineArgs": "-player \"roblox://experiences/start?placeId=13700835620\""
+    },
+    "PlutoStrap (Studio Launch)": {
+      "commandName": "Project",
+      "commandLineArgs": "-studio"
+    },
+    "PlutoStrap (Watcher)": {
+      "commandName": "Project",
+      "commandLineArgs": "-watcher"
+    }
+  }
+}
