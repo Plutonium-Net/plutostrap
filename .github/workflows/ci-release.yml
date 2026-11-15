@@ -1,5 +1,13 @@
 name: CI (Release)
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Tag to publish as a release, e.g. v1.0.0. Leave empty to only build.'
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -28,7 +36,10 @@ jobs:
       run: dotnet build -c Release --no-restore
 
     - name: Publish
-      run: dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -r win-x64 -c Release --self-contained false .\PlutoStrap\PlutoStrap.csproj
+      env:
+        RELEASE_REF: ${{ github.event.inputs.release_tag || github.ref_name }}
+        RELEASE_REF_TYPE: ${{ github.event.inputs.release_tag && 'tag' || github.ref_type }}
+      run: dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ env.RELEASE_REF_TYPE }}/${{ env.RELEASE_REF }} -r win-x64 -c Release --self-contained false .\PlutoStrap\PlutoStrap.csproj
 
     - name: Upload Artifact
       id: upload-artifact
@@ -40,7 +51,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || github.event.inputs.release_tag != ''
     permissions:
       contents: write
       actions: read
@@ -53,11 +64,19 @@ jobs:
           path: release
 
       - name: Rename binaries
-        run: mv release/PlutoStrap.exe PlutoStrap-${{ github.ref_name }}.exe
+        run: mv release/PlutoStrap.exe PlutoStrap-${{ github.event.inputs.release_tag || github.ref_name }}.exe
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.inputs.release_tag || github.ref_name }}
+          name: PlutoStrap ${{ github.event.inputs.release_tag || github.ref_name }}
           draft: false
-          files: PlutoStrap-${{ github.ref_name }}.exe
-          name: PlutoStrap ${{ github.ref_name }}
+          files: PlutoStrap-${{ github.event.inputs.release_tag || github.ref_name }}.exe
+          body: |
+            PlutoStrap ${{ github.event.inputs.release_tag || github.ref_name }} for Windows 10 and 11 (x64).
+
+            Download the `.exe` below and run it. It needs the
+            [.NET 6 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/6.0).
+
+            Built from commit ${{ github.sha }}.
